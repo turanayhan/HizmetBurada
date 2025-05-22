@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseDatabaseInternal
+
+
 import JGProgressHUD
 
 class JobsDetailPage: UIViewController ,UITextViewDelegate {
