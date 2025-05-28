@@ -1,9 +1,4 @@
-//
-//  ProfileImage.swift
-//  Hizmet Burada
-//
-//  Created by turan on 14.10.2024.
-//
+
 
 import UIKit
 import Firebase
@@ -28,8 +23,8 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
         infoText.text = "Profil fotoğrafınızı ekleyin:"
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.backgroundColor = UIColor(hex: "#F1FAFE")
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.backgroundColor = .clear
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()
@@ -39,7 +34,7 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
         infoText.text = "Müşterilerinizin sizi tanıyabilmesi için güncel bir profil fotoğrafı yükleyin.\n Fotoğrafınızın net ve profesyonel görünmesine dikkat edin."
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.backgroundColor = UIColor(hex: "#F1FAFE")
+        infoText.backgroundColor = .clear
         infoText.font = UIFont(name: "Avenir", size: 11)
         infoText.isEditable = false
         return infoText
@@ -47,7 +42,7 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
     lazy var profileImage: UIImageView = {
         let profileImage = UIImageView()
         profileImage.image = UIImage(systemName:"plus")
-        profileImage.tintColor = UIColor(hex: "40A6F8")
+        profileImage.tintColor = .btnBlue
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.cornerRadius = 50 // Dairenin yarıçapı (yuvarlak kenarlar)
         profileImage.clipsToBounds = true
@@ -64,22 +59,41 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
         return profileImage
     }()
     
-    lazy var registerBtn:UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-     
-        button.alpha = 0.5
-        button.isEnabled = false
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowRadius = 2
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        return button
-        
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        btn.alpha = 0.5
+        btn.isEnabled = true
+
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
 
     
@@ -87,12 +101,12 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
-        setupCustomBackButton(with: "")
+        setupCustomBackButton(with: "Hizmet Burada")
+        view.backgroundColor = .backgroundColorWhite
         view.addSubview(profileImageText)
         view.addSubview(profileImageText2)
         view.addSubview(profileImage)
-        view.addSubview(registerBtn)
+        view.addSubview(nextBtn)
         desing()
     }
     
@@ -116,11 +130,12 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
         
         
     
-        registerBtn.anchor(top: nil,
+        nextBtn.anchor(top: nil,
                            bottom: view.safeAreaLayoutGuide.bottomAnchor,
                            leading: profileImageText.leadingAnchor,
                            trailing: profileImageText.trailingAnchor,
-                           padding: .init(top: 0, left: 20, bottom:22, right: 20))
+                           padding: .init(top: 0, left: 20, bottom:22, right: 20),
+                       size: .init(width: 0, height: 36))
 
        
     
@@ -166,8 +181,8 @@ class ProfileImage: UIViewController , UIImagePickerControllerDelegate, UINaviga
                 print("Hata: \(error?.localizedDescription ?? "Bilinmeyen hata")")
                 return
             }
-            self.registerBtn.alpha = 1
-            self.registerBtn.isEnabled = true
+            self.nextBtn.alpha = 1
+            self.nextBtn.isEnabled = true
             self.progresBar.dismiss(afterDelay: 1.0)
             print("Yükleme tamamlandı: \(metadata.path!)")
         }

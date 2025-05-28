@@ -12,7 +12,7 @@ class SelectionPage: UIViewController, UITableViewDataSource, UITableViewDelegat
         infoText.backgroundColor = .clear
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()
@@ -23,7 +23,7 @@ class SelectionPage: UIViewController, UITableViewDataSource, UITableViewDelegat
         infoText.textColor = .black
         infoText.backgroundColor = .clear
         infoText.textAlignment = .center
-        infoText.font = UIFont(name: "Avenir", size: 12)
+        infoText.font = UIFont(name: "Avenir", size: 11)
         infoText.isEditable = false
         return infoText
     }()
@@ -40,32 +40,51 @@ class SelectionPage: UIViewController, UITableViewDataSource, UITableViewDelegat
         return tableView
     }()
     
-    lazy var registerBtn:UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-        button.alpha = 0.5
-        button.isEnabled = false
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowRadius = 2
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        return button
-        
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        btn.alpha = 0.5
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
-       
-        setupCustomBackButton(with: "")
+        setupCustomBackButton(with: "Hizmet Burada")
+        view.backgroundColor = .backgroundColorWhite
+
         view.addSubview(tableView)
         view.addSubview(nameSurnameText)
         view.addSubview(nameSurnameText2)
-        view.addSubview(registerBtn)
+        view.addSubview(nextBtn)
         setupConstraints()
     }
     
@@ -78,11 +97,12 @@ class SelectionPage: UIViewController, UITableViewDataSource, UITableViewDelegat
         nameSurnameText.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 0),size: .init(width: 0, height: 40))
         
         
-        registerBtn.anchor(top: nil,
+        nextBtn.anchor(top: nil,
                            bottom: view.safeAreaLayoutGuide.bottomAnchor,
                            leading: view.leadingAnchor,
                            trailing: view.trailingAnchor,
-                           padding: .init(top: 2, left: 20, bottom:30, right: 20))
+                           padding: .init(top: 2, left: 20, bottom:22, right: 20),
+                       size: .init(width: 0, height: 36))
         
         
         nameSurnameText2.anchor(top: nameSurnameText.bottomAnchor,
@@ -95,7 +115,7 @@ class SelectionPage: UIViewController, UITableViewDataSource, UITableViewDelegat
             tableView.topAnchor.constraint(equalTo: nameSurnameText2.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: registerBtn.topAnchor,constant: 40)
+            tableView.bottomAnchor.constraint(equalTo: nextBtn.topAnchor,constant: 40)
         ])
     }
 
@@ -196,11 +216,11 @@ extension SelectionPage: AnswerTableViewCellDelegate {
     func updateRegisterButtonState() {
         // Eğer selectedAnswers dizisinde en az bir tane true varsa
         if selectedAnswers.contains(true) {
-            registerBtn.isEnabled = true
-            registerBtn.alpha = 1.0  // Butonu tam opak yap
+            nextBtn.isEnabled = true
+            nextBtn.alpha = 1.0  // Butonu tam opak yap
         } else {
-            registerBtn.isEnabled = false
-            registerBtn.alpha = 0.5  // Butonu yarı saydam yap (pasif görünüm)
+            nextBtn.isEnabled = false
+            nextBtn.alpha = 0.5  // Butonu yarı saydam yap (pasif görünüm)
         }
     }
 

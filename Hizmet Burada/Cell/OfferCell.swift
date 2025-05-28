@@ -1,16 +1,4 @@
-//
-//  OfferCell.swift
-//  Hizmet Burada
-//
-//  Created by turan on 23.10.2024.
-//
 
-//
-//  Comment.swift
-//  Hizmet Burada
-//
-//  Created by turan on 14.11.2023.
-//
 
 import Foundation
 import UIKit
@@ -68,7 +56,7 @@ class OfferCell: UICollectionViewCell {
            let date = UILabel()
            date.backgroundColor = UIColor.clear
            date.textAlignment = .right
-           date.text = "14 Kasım 2023"
+           date.text = "14 Kasım 2025"
            date.font = UIFont(name: "Avenir", size: 8)
            return date
        }()
@@ -304,16 +292,16 @@ class OfferCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.setTitle("İletişime Geç", for: .normal)
         button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
+        button.backgroundColor = .btnBlue
         button.layer.cornerRadius = 4
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 10)
         button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
            return button
        }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor(named: "#F2F4F7")
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 0.3
         contentView.layer.borderColor =  UIColor.lightGray.cgColor
@@ -374,7 +362,7 @@ class OfferCell: UICollectionViewCell {
                     trailing: contentView.trailingAnchor,padding: .init(top: 0, left: 0, bottom: 0, right: 6))
         
         
-        stackView.anchor(top: profileImageView.bottomAnchor, bottom: nil, leading: profileImageView.leadingAnchor, trailing: contentView.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+        stackView.anchor(top: profileImageView.bottomAnchor, bottom: communicationBtn.topAnchor, leading: profileImageView.leadingAnchor, trailing: contentView.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         
         communicationBtn.anchor(top: nil, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor,padding: .init(top: 0, left: 16, bottom: 8, right: 18),size: .init(width: 0, height: 20))
 

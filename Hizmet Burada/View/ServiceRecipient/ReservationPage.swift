@@ -58,23 +58,40 @@ class ResarvationPage: UIViewController, UICollectionViewDelegate,UICollectionVi
     }()
     
     let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = .btnBlue
-        button.layer.cornerRadius = 10
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+      
+        btn.isEnabled = true
 
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-           return button
-       }()
-    lazy var navigationTitle:UITextView = {
-        let titleLabel = UITextView()
-        titleLabel.text = "Rezervasyon"
-        titleLabel.textColor = .black // Başlık rengi
-        titleLabel.font = UIFont(name: "Avenier", size: 12)
-        titleLabel.textAlignment = .center
-        titleLabel.backgroundColor = UIColor(hex: "#F1FAFE")
-        return titleLabel
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
     
  
@@ -113,7 +130,7 @@ class ResarvationPage: UIViewController, UICollectionViewDelegate,UICollectionVi
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
-                          padding: .init(top: 0, left: 12, bottom: 30, right: 12),
+                          padding: .init(top: 0, left: 30, bottom: 30, right: 30),
                           size: .init(width: 0, height: 36))
         
         

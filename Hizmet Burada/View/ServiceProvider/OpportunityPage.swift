@@ -29,7 +29,7 @@ class OpportunityPage: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDefaultBackgroundColor()
+        view.backgroundColor = .backgroundColorWhite
         fetchJobData()
         view.addSubview(tableView)
         tableView.delegate = self
@@ -77,10 +77,13 @@ class OpportunityPage: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     func fetchJobData() {
         jobList.removeAll()
-    
+        self.progressHUD.show(in: self.view)
+
         fetchJobFromDatabase { fetchedJobs in
             guard let fetchedJobs = fetchedJobs else {
                 print("Veri alınamadı")
+                self.progressHUD.dismiss(afterDelay: 2.0)
+
                 return
             }
             for (_, jobDetails) in fetchedJobs {
@@ -112,7 +115,7 @@ class OpportunityPage: UIViewController, UITableViewDataSource, UITableViewDeleg
                                     }
                                 }
                             } else {
-                                print("Teklifler boş veya yanlış formatta.")
+                                self.progressHUD.dismiss(afterDelay: 2.0)
                             }
 
                             let jobModel = JobModel(

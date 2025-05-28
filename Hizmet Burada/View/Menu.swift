@@ -86,7 +86,7 @@ let homeButton: UIButton = {
     lazy var tableView: UITableView = {
            let tableView = UITableView()
         tableView.delegate = self
-        tableView.backgroundColor = UIColor(hex: "#F1FAFE")
+        tableView.backgroundColor = .backgroundColorWhite
         tableView.dataSource = self
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorStyle = .none
@@ -116,7 +116,7 @@ override func viewDidLoad() {
     view.layer.shadowRadius = 4
 
 
-    view.backgroundColor = UIColor(hex: "#F1FAFE")
+    view.backgroundColor = .backgroundColorWhite
     
     view.addSubview(container)
     container.addSubview(profileImageView)
@@ -148,7 +148,7 @@ override func viewDidLoad() {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-        cell.backgroundColor =  UIColor(hex: "#F1FAFE")
+        cell.backgroundColor =  .backgroundColorWhite
         cell.modelDetail = userProfile[indexPath.row]
         return cell
     }

@@ -1,9 +1,4 @@
-//
-//  JobsDetailPage.swift
-//  Hizmet Burada
-//
-//  Created by turan on 7.01.2024.
-//
+
 
 import UIKit
 import FirebaseDatabaseInternal
@@ -352,7 +347,7 @@ class JobsDetailPage: UIViewController ,UITextViewDelegate {
         setupCustomBackButton(with: "Detaylar")
       
         
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
+        view.backgroundColor = .backgroundColorWhite
         view.addSubview(scrollView)
         scrollView.addSubview(imageProfile)
         scrollView.addSubview(nameSurnameText)

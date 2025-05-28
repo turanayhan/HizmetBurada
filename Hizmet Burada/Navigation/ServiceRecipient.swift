@@ -51,7 +51,7 @@ class ServiceRecipient: UITabBarController {
         super.viewWillAppear(animated)
         
         tabBar.backgroundColor = .backgroundColorWhite
-        tabBar.tintColor = .red
+        tabBar.tintColor = .btnBlue
         tabBar.isTranslucent = false
         tabBar.barTintColor = .backgroundColorWhite
         

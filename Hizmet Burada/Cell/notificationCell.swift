@@ -59,7 +59,7 @@ class notificationCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cardView)
         contentView.backgroundColor = .clear
-        cardView.backgroundColor = UIColor(hex: "E3F2FD")
+        cardView.backgroundColor = UIColor(hex: "F2F4F7")
         cardView.layer.borderWidth = 0.2
         cardView.layer.borderColor = UIColor.lightGray.cgColor
         cardView.layer.cornerRadius = 4

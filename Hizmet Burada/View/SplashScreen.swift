@@ -47,7 +47,7 @@ class SplashScreen: UIViewController {
        
         
         logoTimer()
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .backgroundColorWhite
         stackview.addArrangedSubview(logoText)
         stackview.addArrangedSubview(logoText2)
         view.addSubview(stackview)

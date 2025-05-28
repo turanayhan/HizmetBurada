@@ -135,7 +135,7 @@ class RecipientMail: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCustomBackButton(with: "Hizmet Burada")
-        super.viewDidLoad()
+     
         stackView.addArrangedSubview(mail)
         stackView.addArrangedSubview(password)
         view.addSubview(stackView)

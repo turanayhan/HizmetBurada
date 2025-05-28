@@ -35,7 +35,7 @@ class OfferPage: UIViewController, UITableViewDataSource, UITableViewDelegate, C
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDefaultBackgroundColor()
+        view.backgroundColor = .backgroundColorWhite
         fetchJobData()
         view.addSubview(tableView)
         tableView.delegate = self

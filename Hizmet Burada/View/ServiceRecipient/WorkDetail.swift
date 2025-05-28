@@ -281,11 +281,10 @@ class WorkDetail: UIViewController ,UITextViewDelegate,UICollectionViewDelegateF
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCustomBackButton(with: "Detaylar")
-      
+        setupCustomBackButton(with: "Hizmet Burada")
+        view.backgroundColor = .backgroundColorWhite
         collectionView.delegate = self
         collectionView.dataSource = self
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
         view.addSubview(container3)
       
   
@@ -372,7 +371,7 @@ class WorkDetail: UIViewController ,UITextViewDelegate,UICollectionViewDelegateF
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.frame.width/2, height: collectionView.frame.height*0.9)
+        return CGSize(width: collectionView.frame.width/2, height: collectionView.frame.height*0.95)
         }
     
     

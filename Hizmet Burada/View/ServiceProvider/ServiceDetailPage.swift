@@ -13,19 +13,41 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
     var instance:[String:String] = [:]
     var status : String?
     
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-        button.isEnabled = true
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowRadius = 2
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        return button
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        btn.alpha = 0.5
+        btn.isEnabled = false
+
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
     
     
@@ -46,7 +68,7 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
         infoText.text = "Eklemem istediğin ekstra bilgileri, iş deneyimlerini yazabilirsin"
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.font = UIFont(name: "Avenir", size: 14)
+        infoText.font = UIFont(name: "Avenir", size: 12)
         infoText.isEditable = false
         return infoText
     }()
@@ -57,8 +79,9 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
         let textBox = UITextView()
         textBox.translatesAutoresizingMaskIntoConstraints = false // Auto Layout kullanabilmek için
         textBox.text = "Ekstra bilgileri girin..."
-        textBox.textColor = UIColor.lightGray // Placeholder rengi
-        textBox.backgroundColor = UIColor(hex: "#E3F2FD") // Arka plan rengi
+        textBox.backgroundColor = .clear
+        
+     
         textBox.layer.borderWidth = 0.6
         textBox.layer.borderColor = UIColor(hex:"40A6F8").cgColor
         textBox.layer.cornerRadius = 5.0 // Kenar yuvarlama
@@ -66,7 +89,7 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
         textBox.layer.shadowOpacity = 0.2 // Gölgede daha belirgin bir etki
         textBox.layer.shadowOffset = CGSize(width: 0, height: 2) // Dikey gölge
         textBox.layer.shadowRadius = 4.0
-        textBox.font = UIFont(name: "Avenir", size: 16)
+        textBox.font = UIFont(name: "Avenir", size: 14)
         textBox.textAlignment = .left // Yazı hizalaması
         textBox.returnKeyType = .done // Klavyede "Tamam" tuşu
         textBox.delegate = self
@@ -79,8 +102,8 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCustomBackButton(with: "")
- 
+        view.backgroundColor = .backgroundColorWhite
+        setupCustomBackButton(with: "Hizmet Burada")
         desing()
         
         
@@ -89,19 +112,13 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
 
     
     func desing(){
-        
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
-        navigationItem.title = ""
-        view.addSubview(nextButton)
+   
+        view.addSubview(nextBtn)
         view.addSubview(nameSurnameText)
         view.addSubview(nameSurnameText2)
         view.addSubview(textBox)
-        nextButton.anchor(top: nil,
-                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                          leading: view.leadingAnchor,
-                          trailing: view.trailingAnchor,
-                          padding: .init(top: 10, left: 10, bottom: 30, right: 10),
-                          size: .init(width: 0, height: 36))
+  
+      
         
         nameSurnameText.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 10, left: 0, bottom: 0, right: 0),size: .init(width: 0, height: 40))
         
@@ -120,8 +137,14 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
                        bottom: nil,
                        leading: view.leadingAnchor,
                        trailing: view.trailingAnchor,
-                       padding: .init(top: 10, left: 20, bottom: 0, right: 20),
+                       padding: .init(top: 10, left: 30, bottom: 0, right: 30),
                        size: .init(width: 0, height: 150))
+        nextBtn.anchor(top: nil,
+                          bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                       leading: textBox.leadingAnchor,
+                       trailing: textBox.trailingAnchor,
+                          padding: .init(top: 20, left: 0, bottom: 30, right: 0),
+                          size: .init(width: 0, height: 36))
         
     }
     
@@ -137,12 +160,34 @@ class ServiceDetailPage: UIViewController,UITextViewDelegate {
         }
     }
     
-    @objc private func nextButtonTapped() {
-        ServiceProviderRegistration.rgİnformation.extraİnformation = textBox.text
+    func textViewDidChange(_ textView: UITextView) {
+        let trimmedText = textBox.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let isPlaceholder = trimmedText == "Ekstra bilgileri girin..."
         
-        var view = RecipientMail()
+        if trimmedText.isEmpty || isPlaceholder {
+            nextBtn.alpha = 0.5
+            nextBtn.isEnabled = false
+        } else {
+            nextBtn.alpha = 1.0
+            nextBtn.isEnabled = true
+        }
+    }
+
+    
+    @objc private func nextButtonTapped() {
+        let trimmedText = textBox.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedText.isEmpty || trimmedText == "Ekstra bilgileri girin..." {
+            // Uyarı göster veya geçişi engelle
+            let alert = UIAlertController(title: "Uyarı", message: "Lütfen ekstra bilgi giriniz.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+            present(alert, animated: true)
+            return
+        }
+
+        ServiceProviderRegistration.rgİnformation.extraİnformation = trimmedText
         navigationController?.pushViewController(ProviderMail(), animated: true)
     }
+
 
     override func viewWillAppear(_ animated: Bool) {
       

@@ -148,7 +148,7 @@ class DetailPage: UIViewController ,UITableViewDelegate, UITableViewDataSource, 
         textBox.translatesAutoresizingMaskIntoConstraints = false // Auto Layout kullanabilmek için
         textBox.text = "Ekstra bilgileri girin..."
         textBox.textColor = UIColor.lightGray // Placeholder rengi
-        textBox.backgroundColor = .white
+        textBox.backgroundColor = .black
         textBox.layer.cornerRadius = 12
         textBox.layer.borderWidth = 0.3
         textBox.layer.borderColor =  UIColor.lightGray.cgColor
@@ -262,9 +262,9 @@ class DetailPage: UIViewController ,UITableViewDelegate, UITableViewDataSource, 
         
         nextButton.anchor(top: nil,
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                          leading: textBox.leadingAnchor,
-                          trailing: textBox.trailingAnchor,
-                          padding: .init(top: 0, left: 0, bottom: 30, right: 0),
+                          leading: view.leadingAnchor,
+                          trailing: view.trailingAnchor,
+                          padding: .init(top: 0, left: 30, bottom: 30, right: 30),
                           size: .init(width: 0, height: 36))
         
         infoText.anchor(top: view.safeAreaLayoutGuide.topAnchor,

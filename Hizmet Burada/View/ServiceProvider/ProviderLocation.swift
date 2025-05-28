@@ -27,9 +27,10 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
     var selectedSehir: String?
     lazy var progresBar:JGProgressHUD = {
         let progresBar = JGProgressHUD(style: .light)
-        progresBar.textLabel.text = "Kaydınız Gerçekleşiyor"
+        progresBar.backgroundColor = .clear
         return  progresBar
     }()
+    
     
     
     
@@ -61,7 +62,8 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         infoText.text = "Nerede Hizmet Veriyorsun?"
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.backgroundColor = .clear
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()
@@ -71,7 +73,8 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         infoText.text = "Sana yakın bölgelerden iş fırsatlarını göndereceğiz "
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.font = UIFont(name: "Avenir", size: 12)
+        infoText.backgroundColor = .clear
+        infoText.font = UIFont(name: "Avenir", size: 11)
         infoText.isEditable = false
         return infoText
     }()
@@ -138,21 +141,44 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         return location
     }()
 
-    lazy var registerBtn:UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-        button.alpha = 0.5
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowRadius = 2
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        return button
-        
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        btn.alpha = 0.5
+        btn.isEnabled = true
+
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
+    
+    
     let userModel:User = {
         let model = UserManager.shared.getUser()
         return model
@@ -161,8 +187,8 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
-        setupCustomBackButton(with: "")
+        view.backgroundColor = .backgroundColorWhite
+        setupCustomBackButton(with: "Hizmet Burada")
         fetchSehirler()
         adress()
       
@@ -175,7 +201,7 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         view.addSubview(ilceDropdown)
         view.addSubview(location2)
         view.addSubview(location3)
-        view.addSubview(registerBtn)
+        view.addSubview(nextBtn)
         desing()
         
         // TextField değişikliklerini izliyoruz
@@ -217,11 +243,11 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         if location1.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
            location2.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
            location3.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            registerBtn.isEnabled = false
-            registerBtn.alpha = 0.5
+            nextBtn.isEnabled = false
+            nextBtn.alpha = 0.5
         } else {
-            registerBtn.isEnabled = true
-            registerBtn.alpha = 1
+            nextBtn.isEnabled = true
+            nextBtn.alpha = 1
         }
     }
 
@@ -278,11 +304,13 @@ class ProviderLocation: UIViewController ,UITableViewDelegate, UITableViewDataSo
         
         
     
-        registerBtn.anchor(top: nil,
-                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                           leading: location3.leadingAnchor,
-                           trailing: location3.trailingAnchor,
-                           padding: .init(top: 0, left: 0, bottom:22, right: 0))
+        
+        nextBtn.anchor(top: nil,
+                       bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                       leading: location3.leadingAnchor,
+                       trailing: location3.trailingAnchor,
+                       padding: .init(top: 0, left: 0, bottom:22, right: 0),
+                       size: .init(width: 0, height: 36))
 
    
         

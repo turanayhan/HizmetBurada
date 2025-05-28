@@ -15,6 +15,7 @@ class Message: UIViewController ,UITableViewDataSource, UITableViewDelegate  {
     let screenHeight = UIScreen.main.bounds.height
     let chatmanager = ChatManager()
     var chatList : [ChatWithUsersModel] = []
+
   
     
     lazy var separatorLine:UIView = {
@@ -64,7 +65,7 @@ class Message: UIViewController ,UITableViewDataSource, UITableViewDelegate  {
     lazy var container : UIView = {
         
         let container = UIView()
-        container.isHidden = false
+        container.isHidden = true
         container.backgroundColor = .clear
         return container
     }()
@@ -217,15 +218,26 @@ class Message: UIViewController ,UITableViewDataSource, UITableViewDelegate  {
 
 
     func getMessages() {
+
+        
+        
         self.chatmanager.fetchUserChats(userID: UserManager.shared.getUser().id!) { chats in
+            
+            self.progresBar.show(in: self.view)
+            
             if chats.isEmpty {
                 print("Kullanıcının hiç sohbeti yok.")
+                self.progresBar.dismiss(afterDelay: 2.0)
+                self.container.isHidden = false
+
             } else {
                 for chatID in chats {
                     self.chatmanager.observeChat(chatID: chatID) { chat in
                         self.chatList.removeAll()
                         guard let chat = chat else {
                             print("Sohbet bilgileri alınamadı.")
+                            self.progresBar.dismiss(afterDelay: 2.0)
+
                             return
                         }
                         
@@ -235,6 +247,10 @@ class Message: UIViewController ,UITableViewDataSource, UITableViewDelegate  {
                             let chatWithUsersModel = ChatWithUsersModel(chat: model, participantsInfo: users)
                             self.chatList.append(chatWithUsersModel)
                             self.tableView.reloadData()
+                            self.container.isHidden = true
+
+                            self.progresBar.dismiss(afterDelay: 2.0)
+
                         }
                     }
                 }
@@ -246,23 +262,34 @@ class Message: UIViewController ,UITableViewDataSource, UITableViewDelegate  {
     
     func getUserİnfo(userIds: [String], completion: @escaping ([User]) -> Void) {
         self.chatmanager.fetchUsers(userIDs: userIds) { users in
+            // Eğer gelen liste boşsa işlem yap ve return et
+            guard !users.isEmpty else {
+                print("Kullanıcı listesi boş.")
+          
+                completion([])
+                return
+            }
+
             var userModels: [User] = []
             for user in users {
-                
                 if user.id != UserManager.shared.getUser().id {
-                    
-                    let userModel = User(nameSurname: user.nameSurname,gsm: user.gsm,email: user.email,id: user.id,status: user.status,adress: user.adress,profileImage: user.profileImage )
-                    
+                    let userModel = User(
+                        nameSurname: user.nameSurname,
+                        gsm: user.gsm,
+                        email: user.email,
+                        id: user.id,
+                        status: user.status,
+                        adress: user.adress,
+                        profileImage: user.profileImage
+                    )
                     userModels.append(userModel)
-        
-                    
+         
                 }
-                
-                
             }
             completion(userModels)
         }
     }
+
 
 
     

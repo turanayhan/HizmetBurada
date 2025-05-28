@@ -30,8 +30,10 @@ class Work: UITableViewCell , UITableViewDelegate, UITableViewDataSource {
     
     let cardView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: "#E3F2FD")
+        view.backgroundColor = UIColor(hex: "#F2F4F7")
         view.layer.cornerRadius = 4
+        view.layer.borderWidth = 0.2
+        view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 0.5)
         view.layer.shadowOpacity = 0.1
@@ -58,7 +60,7 @@ class Work: UITableViewCell , UITableViewDelegate, UITableViewDataSource {
     
     lazy var profileImage: UIImageView = {
        let profileImage = UIImageView()
-        profileImage.image = UIImage(named: "10780359_19197068")
+        profileImage.image = UIImage(named: "job_offer")
         profileImage.contentMode = .scaleAspectFill
         profileImage.clipsToBounds = true
         profileImage.layer.cornerRadius = 12
@@ -84,7 +86,7 @@ class Work: UITableViewCell , UITableViewDelegate, UITableViewDataSource {
         let button = UIButton(type: .system)
         button.setTitle("Detaylara Bak", for: .normal)
         button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
+        button.backgroundColor = .btnBlue
         button.layer.cornerRadius = 4
         button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
         button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
@@ -202,7 +204,7 @@ class Work: UITableViewCell , UITableViewDelegate, UITableViewDataSource {
         
         jobStatus.anchor(top: separatorLine.bottomAnchor, bottom: nil, leading: cardView.leadingAnchor, trailing: cardView.trailingAnchor,padding: .init(top: 8, left: 12, bottom: 0, right: 12),size: .init(width: 0, height: 0))
         
-        profileImage.anchor(top: jobStatus.bottomAnchor, bottom: nil, leading: nil, trailing: nil,padding: .init(top: 6, left: 0, bottom: 0, right: 0),size: .init(width: 60, height: 60))
+        profileImage.anchor(top: jobStatus.bottomAnchor, bottom: nextButton.topAnchor, leading: nil, trailing: nil,padding: .init(top: 0, left: 0, bottom: 0, right: 0),size: .init(width: 50, height: 50))
         profileImage.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         
         nextButton.anchor(top: nil, bottom: cardView.bottomAnchor, leading: cardView.leadingAnchor, trailing: cardView.trailingAnchor,padding: .init(top: 0, left: 12, bottom: 8, right: 12),size: .init(width: 0, height: 26))

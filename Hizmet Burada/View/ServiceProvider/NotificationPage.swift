@@ -14,10 +14,10 @@ class NotificationPage: UITableViewController {
       
     ]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDefaultBackgroundColor()
         
         tableView.register(notificationCell.self, forCellReuseIdentifier: "notificationCell")
         tableView.backgroundColor = .backgroundColorWhite

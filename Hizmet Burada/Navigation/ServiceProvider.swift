@@ -1,15 +1,4 @@
-//
-//  Tabbar2.swift
-//  Hizmet Burada
-//
-//  Created by turan on 25.12.2023.
-//
-//
-//  TabBar.swift
-//  Hizmet Burada
-//
-//  Created by turan on 3.11.2023.
-//
+
 
 import UIKit
 import SideMenu
@@ -73,10 +62,10 @@ class ServiceProvider: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
         
-        tabBar.backgroundColor = UIColor(hex: "#E3F2FD")
-        tabBar.tintColor = .red
+        tabBar.backgroundColor = .backgroundColorWhite
+        tabBar.tintColor = .btnBlue
         tabBar.isTranslucent = false
-        tabBar.barTintColor = UIColor(hex: "#E3F2FD")
+        tabBar.barTintColor = .backgroundColorWhite
             if navigationController != nil {
       
                 self.navigationController?.isNavigationBarHidden = true

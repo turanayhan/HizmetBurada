@@ -37,8 +37,8 @@ class ProviderName: UIViewController {
         infoText.text = "Adın ve soyadın nedir?"
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.backgroundColor = UIColor(hex: "#F1FAFE")
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.backgroundColor = .clear
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()
@@ -48,7 +48,7 @@ class ProviderName: UIViewController {
         infoText.text = "Müşteriler, profilinizde ve teklif mesajlarınızda adınızı görecekler. İsminizin ve soyisminizin baş harflerini büyük yazmanız, daha profesyonel \nbir izlenim bırakacaktır."
         infoText.textColor = .black
         infoText.textAlignment = .center
-        infoText.backgroundColor = UIColor(hex: "#F1FAFE")
+        infoText.backgroundColor = .clear
         infoText.font = UIFont(name: "Avenir", size: 11)
         infoText.isEditable = false
         return infoText
@@ -66,21 +66,25 @@ class ProviderName: UIViewController {
         let nameSurname = UITextField()
         nameSurname.placeholder = "Ad"
         nameSurname.borderStyle = .roundedRect
-        nameSurname.font = UIFont(name: "Avenir", size: 14)
+        nameSurname.tintColor = .btnBlue
+        nameSurname.font = UIFont(name: "Avenir", size: 12)
         nameSurname.layer.borderWidth = 0.6 // Sınır kalınlığı
-        nameSurname.layer.borderColor = UIColor(hex: "40A6F8").cgColor // İstediğiniz renk
+        nameSurname.layer.borderColor = UIColor.borderColor.cgColor // İstediğiniz renk
         nameSurname.layer.cornerRadius = 5//
         nameSurname.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        nameSurname.setPadding(left: 10, right: 0, top: 0, bottom: 0)
         return nameSurname
     }()
     
     lazy var surname:UITextField = {
         let surname = UITextField()
         surname.placeholder = "Soyad"
-        surname.font = UIFont(name: "Avenir", size: 14)
+        surname.font = UIFont(name: "Avenir", size: 12)
         surname.borderStyle = .roundedRect
+        surname.tintColor = .btnBlue
+        surname.setPadding(left: 10, right: 0, top: 0, bottom: 0)
         surname.layer.borderWidth = 0.6 // Sınır kalınlığı
-        surname.layer.borderColor = UIColor(hex: "40A6F8").cgColor // İstediğiniz renk
+        surname.layer.borderColor = UIColor.borderColor.cgColor // İstediğiniz renk
         surname.layer.cornerRadius = 5//
         surname.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return surname
@@ -89,32 +93,52 @@ class ProviderName: UIViewController {
     
     
     
-    lazy var registerBtn:UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Devam", for: .normal)
-        button.alpha = 0.5
-        button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowRadius = 2
-        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        return button
-        
+    
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .btnBlue
+        btn.layer.cornerRadius = 8
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = CGSize(width: 3, height: 3)
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        btn.alpha = 0.5
+        btn.setTitle("Devam", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 12)
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+
+        // Ok ikonu
+        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+        arrowImageView.tintColor = .white
+        arrowImageView.contentMode = .scaleAspectFit
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Butona ekle
+        btn.addSubview(arrowImageView)
+
+        // Auto Layout ile hizalama
+        NSLayoutConstraint.activate([
+            arrowImageView.centerYAnchor.constraint(equalTo: btn.centerYAnchor),
+            arrowImageView.trailingAnchor.constraint(equalTo: btn.trailingAnchor, constant: -16), // Sağdan 16 birim içerde
+            arrowImageView.widthAnchor.constraint(equalToConstant: 18),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 18)
+        ])
+
+        return btn
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        setupCustomBackButton(with: "")
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
+        setupCustomBackButton(with: "Hizmet Burada")
+        view.backgroundColor = .backgroundColorWhite
         view.addSubview(profileImage)
         stackView.addArrangedSubview(name)
         stackView.addArrangedSubview(surname)
         view.addSubview(stackView)
-        view.addSubview(registerBtn)
+        view.addSubview(nextBtn)
         view.addSubview(nameSurnameText)
         view.addSubview(nameSurnameText2)
         
@@ -141,25 +165,26 @@ class ProviderName: UIViewController {
         
         
         
-        registerBtn.anchor(top: nil,
+        nextBtn.anchor(top: nil,
                            bottom: view.safeAreaLayoutGuide.bottomAnchor,
                            leading: stackView.leadingAnchor,
                            trailing: stackView.trailingAnchor,
-                           padding: .init(top: 0, left: 0, bottom:22, right: 0))
+                           padding: .init(top: 0, left: 0, bottom:22, right: 0),
+                       size: .init(width: 0, height: 36))
         
     }
     
     @objc func textFieldDidChange(textField: UITextField) {
         if name.text!.isEmpty  {
-            registerBtn.isEnabled = false
+            nextBtn.isEnabled = false
         
             
-            registerBtn.alpha = 0.5
+            nextBtn.alpha = 0.5
             
         } else {
-            registerBtn.isEnabled = true
+            nextBtn.isEnabled = true
           
-            registerBtn.alpha = 1
+            nextBtn.alpha = 1
         }
     }
     

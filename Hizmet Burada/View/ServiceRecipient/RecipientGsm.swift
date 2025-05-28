@@ -29,7 +29,7 @@ class RecipientGsm: UIViewController, UITextFieldDelegate {
         infoText.textAlignment = .center
         infoText.backgroundColor = .clear
         
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()

@@ -72,7 +72,8 @@ class ChatPage: UIViewController, UITableViewDataSource, UITableViewDelegate {
         textField.borderStyle = .roundedRect
         textField.layer.cornerRadius = 4
         textField.clipsToBounds = true
-        textField.backgroundColor = UIColor(hex: "E3F2FD")
+     
+        textField.backgroundColor = UIColor(hex: "F2F4F7")
         textField.font = UIFont.systemFont(ofSize: 12)
         return textField
     }()
@@ -166,7 +167,7 @@ class ChatPage: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
         override func viewDidLoad() {
             super.viewDidLoad()
-            setDefaultBackgroundColor()
+            view.backgroundColor = .backgroundColorWhite
             getMessages(id: id ?? "0")
             setupCustomBackButtons(with: "")
             sendButton.isHidden = true

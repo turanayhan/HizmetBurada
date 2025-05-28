@@ -56,7 +56,7 @@ class RecipientLocation: UIViewController ,UITableViewDelegate, UITableViewDataS
         infoText.textColor = .black
         infoText.textAlignment = .center
         infoText.backgroundColor = .clear
-        infoText.font = UIFont(name: "Helvetica-Bold", size: 16)
+        infoText.font = UIFont(name: "Helvetica-Bold", size: 14)
         infoText.isEditable = false
         return infoText
     }()
@@ -67,7 +67,7 @@ class RecipientLocation: UIViewController ,UITableViewDelegate, UITableViewDataS
         infoText.textColor = .black
         infoText.textAlignment = .center
         infoText.backgroundColor = .clear
-        infoText.font = UIFont(name: "Avenir", size: 12)
+        infoText.font = UIFont(name: "Avenir", size: 11)
         infoText.isEditable = false
         return infoText
     }()

@@ -199,9 +199,8 @@ class UserPage: UIViewController , UITableViewDelegate, UITableViewDataSource, U
     lazy var SaveButton:UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Kaydet", for: .normal)
-        button.alpha = 0.5
         button.setTitleColor(UIColor(hex: "E3F2FD"), for: .normal)
-        button.backgroundColor = UIColor(hex: "#40A6F8")
+        button.backgroundColor = .btnBlue
         button.layer.cornerRadius = 10
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 1, height: 1)
@@ -216,8 +215,8 @@ class UserPage: UIViewController , UITableViewDelegate, UITableViewDataSource, U
         super.viewDidLoad()
         fetchSehirler()
         adress()
-        setupCustomBackButton(with:"")
-        view.backgroundColor = UIColor(hex: "#F1FAFE")
+        setupCustomBackButton(with: "Hizmet Burada")
+        view.backgroundColor = .backgroundColorWhite
         view.addSubview(header)
         view.addSubview(header2)
         navigationItem.title = "Kişisel Bilgiler"
